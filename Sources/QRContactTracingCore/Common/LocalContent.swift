@@ -45,26 +45,15 @@ public struct LocalContent: Identifiable {
         return df
     }()
     
-    /// Initialize from a code
-    ///
-    /// - parameter code: code scanned (conforms to `Code`)
-    /// - parameter date: when code was entered (default: now)
-    public init<T: Code>(code: T, date: Date = Date()) {
-        self.codeId = code.id
-        self.date = date
-        self.transportableKey = Self.buildTransportableKey(id: code.id, date: date)
-    }
-
-    
-    /// Initialize from raw data
+    /// Initializer
     ///
     /// - parameter codeId: Code ID (see `Code.id`)
-    /// - parameter date: Date when code was entered
+    /// - parameter date: Date when code was entered (default: now)
     /// - parameter transportableKey: Transportable key calculated from code id + date
-    public init(codeId: UUID, date: Date, transportableKey: Data) {
+    public init(codeId: UUID, date: Date = Date(), transportableKey: Data? = nil) {
         self.codeId = codeId
         self.date = date
-        self.transportableKey = transportableKey
+        self.transportableKey = transportableKey ?? Self.buildTransportableKey(id: codeId, date: date)
     }
 }
 

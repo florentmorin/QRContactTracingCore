@@ -95,7 +95,7 @@ You need to store 3 informations:
 So, once you received the code, you need to generate local content like this:
 
 ```swift
-let content = LocalContent(code: <# the code created from scan #>, date: <# Date of scan #>)
+let content = LocalContent(codeId: <# The ID from code #>, date: <# Date of scan #>)
 
 // Then, you can use `content.codeId`, `content.date` and `content.transportableKey`
 

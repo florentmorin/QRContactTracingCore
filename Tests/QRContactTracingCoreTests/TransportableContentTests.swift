@@ -11,7 +11,7 @@ import QRContactTracingCore
 final class TransportableContentTests: XCTestCase {
     
     func testInitialization() {
-        let localContent = LocalContent(code: MyCode(id: UUID()))
+        let localContent = LocalContent(codeId: UUID())
         let data = "Hello World!".data(using: .utf8)!
         
         let sentContent = TransportableContent(localContent: localContent, clearData: data)
@@ -24,11 +24,11 @@ final class TransportableContentTests: XCTestCase {
         
         let senderDate = Date()
         let senderCode = MyCode(id: id)
-        let senderLocalContent = LocalContent(code: senderCode, date: senderDate)
+        let senderLocalContent = LocalContent(codeId: senderCode.id, date: senderDate)
         
         let receiverDate = Date().addingTimeInterval(10)
         let receiverCode = MyCode(id: id)
-        let receiverLocalContent = LocalContent(code: receiverCode, date: receiverDate)
+        let receiverLocalContent = LocalContent(codeId: receiverCode.id, date: receiverDate)
         
         let data = "Hello World!".data(using: .utf8)!
         let sentContent = TransportableContent(localContent: senderLocalContent, clearData: data)

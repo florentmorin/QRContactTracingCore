@@ -15,7 +15,7 @@ final class LocalContentTests: XCTestCase {
         let code = MyCode(id: identifier)
         let date = Date()
         
-        let scannedContent = LocalContent(code: code, date: date)
+        let scannedContent = LocalContent(codeId: code.id, date: date)
         let key = scannedContent.transportableKey
         
         XCTAssertEqual(scannedContent.codeId, code.id)
