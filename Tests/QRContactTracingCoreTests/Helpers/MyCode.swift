@@ -20,6 +20,10 @@ import UIKit
 import SwiftUI
 #endif
 
+#if canImport(AVFoundation)
+import AVFoundation
+#endif
+
 fileprivate extension UUID {
     
     /// Build UUID from data
@@ -197,4 +201,8 @@ extension MyCode: SwiftUICode { }
 #endif
 #endif
 
+#endif
+
+#if canImport(AVFoundation)
+extension MyCode: AVMetadataCode { }
 #endif

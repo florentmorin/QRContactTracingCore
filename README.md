@@ -88,6 +88,16 @@ You can generate an image of your QR code for your favorite platform:
 
 ```swift
 
+struct MyCode: Code {
+    // ....
+}
+
+extension MyCode: UIKitCode { }
+extension MyCode: AppKitCode { }
+extension MyCode: CoreGraphicsCode { }
+extension MyCode: CoreImageCode { }
+extension MyCode: SwiftUICode { }
+
 // Raw PNG data (to store in file)
 let imageData = code.pngData()
 let imageData = code.pngData(length: 200)
@@ -111,6 +121,40 @@ let image = code.cgImage(length: 200)
 // CIImage (macOS, iOS, macOS Catalyst, tvOS)
 let image = code.ciImage()
 let image = code.ciImage(length: 200)
+
+```
+
+### Scan code from `AVCaptureSession`
+
+You can easily transform `AVMetadataObject` to `Code`.
+
+```swift
+
+struct MyCode: Code {
+    // ....
+}
+
+extension MyCode: AVMetadataCode { }
+
+func setup() {
+    captureSession = AVCaptureSession()
+    // ...
+    let metadataOutput = AVCaptureMetadataOutput()
+    // ...
+    metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+    metadataOutput.metadataObjectTypes = [.qr]
+}
+
+// AVCaptureMetadataOutputObjectsDelegate
+
+func metadataOutput(_ output: AVCaptureMetadataOutput,
+                    didOutput metadataObjects: [AVMetadataObject],
+                    from connection: AVCaptureConnection) {
+   // `MyCode` conforming to `AVMetadataCode`
+   if let code = MyCode.create(from: metadataObjects)?.first {
+       // code found
+   }
+}
 
 ```
 
