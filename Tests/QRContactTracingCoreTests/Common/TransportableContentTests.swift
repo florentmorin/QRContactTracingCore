@@ -6,6 +6,7 @@
 //
 
 import XCTest
+
 import QRContactTracingCore
 
 final class TransportableContentTests: XCTestCase {

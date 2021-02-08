@@ -6,7 +6,8 @@
 //
 
 import XCTest
-import QRContactTracingCore
+
+@testable import QRContactTracingCore
 
 final class LocalContentTests: XCTestCase {
     
@@ -26,8 +27,11 @@ final class LocalContentTests: XCTestCase {
         
         XCTAssertEqual(rawContent.codeId, code.id)
         XCTAssertEqual(rawContent.codeId, identifier)
+        XCTAssertEqual(rawContent.key, code.id.data)
+        XCTAssertEqual(rawContent.key, rawContent.codeId.data)
         XCTAssertEqual(rawContent.date, date)
         XCTAssertEqual(rawContent.transportableKey, key)
+        XCTAssertEqual(rawContent.transportableKey, LocalContent.buildTransportableKey(id: rawContent.codeId, date: rawContent.date))
     }
     
     static var allTests = [
