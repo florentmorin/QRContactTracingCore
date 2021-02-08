@@ -12,7 +12,7 @@ Simply add `https://github.com/florentmorin/QRContactTracingCore` to Swift Packa
 
 This will describe a generic workflow.
 
-### You `Code` implementation
+### Your `Code` implementation
 
 First, implement `Code` to describe the code your users will scan or will enter manually.
 
@@ -80,6 +80,38 @@ This can also be used to generate a code. The URL will be built with:
 ```swift
 let code = MyCode(id: UUID())
 let url = myCode.buildURL()
+```
+
+### Display code as Image
+
+You can generate an image of your QR code for your favorite platform:
+
+```swift
+
+// Raw PNG data (to store in file)
+let imageData = code.pngData()
+let imageData = code.pngData(length: 200)
+
+// SwiftUI Image (macOS, iOS, macOS Catalyst, tvOS)
+let image = code.image()
+let image = code.image(length: 200)
+
+// UIImage (iOS, macOS Catalyst, tvOS)
+let image = code.uiImage()
+let image = code.uiImage(length: 200)
+
+// NSImage (macOS)
+let image = code.nsImage()
+let image = code.nsImage(length: 200)
+
+// CGImage (macOS, iOS, macOS Catalyst, tvOS)
+let image = code.cgImage()
+let image = code.cgImage(length: 200)
+
+// CIImage (macOS, iOS, macOS Catalyst, tvOS)
+let image = code.ciImage()
+let image = code.ciImage(length: 200)
+
 ```
 
 ### Store a code locally
