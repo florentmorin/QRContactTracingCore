@@ -31,13 +31,20 @@ extension AVMetadataCode {
     ///
     /// - parameter avMetadataObject: The captured metadata
     public init?(avMetadataObject: AVMetadataObject) {
-        guard let readableObject = avMetadataObject as? AVMetadataMachineReadableCodeObject,
-              let stringValue = readableObject.stringValue,
-              let url = URL(string: stringValue) else {
+        let scannedURL: URL
+        if #available(macOS 10.15, *) {
+            guard let readableObject = avMetadataObject as? AVMetadataMachineReadableCodeObject,
+                  let stringValue = readableObject.stringValue,
+                  let url = URL(string: stringValue) else {
+                return nil
+            }
+            
+            scannedURL = url
+        } else {
             return nil
         }
         
-        self.init(url: url)
+        self.init(url: scannedURL)
     }
     
     /// Create an array of QR code from metadata output
