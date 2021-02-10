@@ -13,7 +13,9 @@ import CoreImage
 
 #if canImport(CoreServices)
 import CoreServices
-#elseif canImport(MobileCoreServices)
+#endif
+
+#if canImport(MobileCoreServices)
 import MobileCoreServices
 #endif
 
