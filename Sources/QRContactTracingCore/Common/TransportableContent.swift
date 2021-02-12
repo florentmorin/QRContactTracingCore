@@ -16,7 +16,7 @@ import CommonCrypto
  And, to decrypt supplement data from an importation, local content is required.
  
  */
-public struct TransportableContent: Identifiable {
+public struct TransportableContent {
     
     /// Identifier is based on key and encryptedData
     public var id: Data {

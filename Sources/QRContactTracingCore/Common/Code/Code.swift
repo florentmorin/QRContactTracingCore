@@ -56,7 +56,7 @@ import Foundation
  ```
  
  */
-public protocol Code: Identifiable {
+public protocol Code {
     
     /// An option is the input
     associatedtype Option: Hashable

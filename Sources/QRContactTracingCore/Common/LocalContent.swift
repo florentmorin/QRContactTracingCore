@@ -18,7 +18,7 @@ import CommonCrypto
  Raw data can be stored into local database.
  
  */
-public struct LocalContent: Identifiable {
+public struct LocalContent {
     
     /// Unique identifier is transportable key
     ///
