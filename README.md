@@ -243,6 +243,27 @@ let receivedContent: TransportableContent
 let diagnosisData = receivedContent.decryptData(localContent: localContent)
 ```
 
+## Tips for date offset
+
+Date offset can depend on time spent in a specific place:
+
+* if you are in a restaurant, time offset will represent a meal time
+* if you are in an enterprise, time offset will represent a team turning time
+* if you are in a school classroom, it will represent an hour of time.
+
+You can adjust it by passing information using code.
+
+In example, you can consider default date offset depending of place type. Place type is sent by code.
+
+But, if you want to specify current date offset, you can use a specific code (ie. "do=15" in URL means that date offset is 15).
+
+Or you can specify all date offsets in code and current date offset is calculated. In exemple, you can use these informations:
+
+* `do1=00000430` means date offset 1 represents period from 00:00 to 04:30
+* `do2=04301230` means date offset 2 represents period from 04:30 to 12:30
+* `do3=12301900` means date offset 3 represents period from 12:30 to 19:00
+* `do4=19002359` means date offset 4 represents period from 19:00 to 23:59
+
 ## How it works
 
 First, local content generate a local identifier using UUIDv4, which is a random 16 bytes content. Perfect 128-bits key. Stored locally, exclusively.
