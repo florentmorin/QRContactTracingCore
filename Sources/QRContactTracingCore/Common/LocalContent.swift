@@ -35,35 +35,51 @@ public struct LocalContent: Identifiable {
     /// Date when code was entered
     public let date: Date
     
+    /// Date offset
+    public let dateOffset: Int?
+    
     /// Transportable key calculated from code id + date
     public let transportableKey: Data
     
     /// A date formatter used for encryption
+    @inline(__always)
     fileprivate static let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "yyyyMMdd"
         return df
     }()
-    
     /// Initializer
     ///
     /// - parameter codeId: Code ID (see `Code.id`)
     /// - parameter date: Date when code was entered (default: now)
-    /// - parameter transportableKey: Transportable key calculated from code id + date
-    public init(codeId: UUID, date: Date = Date(), transportableKey: Data? = nil) {
+    /// - parameter dateOffset: Custom date offset to specify each part of the day is concerned (default: nil)
+    /// - parameter transportableKey: Transportable key calculated from code id + date + date offset
+    public init(codeId: UUID, date: Date = Date(), dateOffset: Int? = nil, transportableKey: Data? = nil) {
         self.codeId = codeId
         self.date = date
-        self.transportableKey = transportableKey ?? Self.buildTransportableKey(id: codeId, date: date)
+        self.dateOffset = dateOffset
+        self.transportableKey = transportableKey ?? Self.buildTransportableKey(id: codeId, date: date, dateOffset: dateOffset)
     }
 }
 
 extension LocalContent {
     
+    @inline(__always)
+    private static func buildPassword(date: Date, dateOffset: Int? = nil) -> String {
+        var password = dateFormatter.string(from: date)
+        
+        if let dateOffset = dateOffset {
+            password = password + String(dateOffset)
+        }
+        
+        return password
+    }
+    
     /// Build transportable key using PBKDF2
     @inline(__always)
-    internal static func buildTransportableKey(id: UUID, date: Date) -> Data {
+    internal static func buildTransportableKey(id: UUID, date: Date, dateOffset: Int? = nil) -> Data {
         let length: Int = kCCKeySizeAES128
-        let password = dateFormatter.string(from: date)
+        let password = buildPassword(date: date, dateOffset: dateOffset)
         let rawPassword: [CChar] = password.cString(using: .utf8)!.dropLast()
         let rawSalt: [CUnsignedChar] = Array(hexadecimalSalt(id))
             .chunked(into: 2)

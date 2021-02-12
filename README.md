@@ -162,11 +162,11 @@ func metadataOutput(_ output: AVCaptureMetadataOutput,
 
 You can store a code with your preferred method: Core Data, Realm, JSON file, raw data.
 
-You need to store 3 informations:
+You need to store at least 3 informations:
 
 * Code identifier
-* Date of scan / manual input
-* A 128 bits key generated from code identifier and date _(called transportableKey)_
+* Date of scan / manual input (calculation is based on day + month + year)
+* A 128 bits key generated from code identifier, date offset _(if present)_ and date _(called transportableKey)_
 
 So, once you received the code, you need to generate local content like this:
 
@@ -174,6 +174,18 @@ So, once you received the code, you need to generate local content like this:
 let content = LocalContent(codeId: <# The ID from code #>, date: <# Date of scan #>)
 
 // Then, you can use `content.codeId`, `content.date` and `content.transportableKey`
+
+<# Store your data from content #>
+
+```
+If you want to add an offset for each date (ie 1 = morning, 2 = afternoon), it's possible.
+
+You just need to store date offset. Date offset will be used in key calculation.
+
+```swift
+let content = LocalContent(codeId: <# The ID from code #>, date: <# Date of scan #>, dateOffset: <# Offset #>)
+
+// Then, you can use `content.codeId`, `content.date`, `content.dateOffset` and `content.transportableKey`
 
 <# Store your data from content #>
 
@@ -186,7 +198,7 @@ Your data are stored locally and you want to share them with other users.
 First, rebuild your content:
 
 ```swift
-let localContent = LocalContent((codeId: <# UUID #>, date: <# Date #>, transportableKey: <# Data #>)
+let localContent = LocalContent(codeId: <# UUID #>, date: <# Date #>, transportableKey: <# Data #>)
 ```
 
 Then, create transportable content with data required for diagnosis:

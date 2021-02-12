@@ -35,12 +35,12 @@ public struct TransportableContent: Identifiable {
     /// - parameter clearData: Supplement data that need to be encrypted (stored in `encryptedData`)
     @inline(__always)
     public init?(localContent: LocalContent, clearData: Data) {
-        let key = localContent.transportableKey
+        let iv = localContent.transportableKey
         
         let data = Self.crypt(
             input: clearData,
             key: localContent.key,
-            iv: key,
+            iv: iv,
             operation: CCOperation(kCCEncrypt)
         )
         
@@ -49,7 +49,7 @@ public struct TransportableContent: Identifiable {
         }
         
         self.encryptedData = encryptedData
-        self.key = key
+        self.key = iv
     }
     
     /// Initializer from external data
