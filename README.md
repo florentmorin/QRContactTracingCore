@@ -23,15 +23,15 @@ import QRContactTracingCore
 struct MyCode: Code {
 
     enum Option: String, Hashable {
-        case type
-        case capacity
+        case type       = "t"
+        case capacity   = "c"
     }
 
     enum CodeType: String, Hashable {
-       case person
-       case house
-       case enterprise
-       case shop
+       case person      = "p"
+       case house       = "h"
+       case enterprise  = "e"
+       case shop        = "s"
     }
     
     let id: UUID
